@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plant Disease Detector</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1><i class="fas fa-leaf"></i> Plant Disease Detector</h1>
+      <p>Identify, prevent, and treat plant diseases with our comprehensive guide</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="search-section">
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for plants or diseases...">
+        <button id="searchBtn"><i class="fas fa-search"></i></button>
+      </div>
+      
+      <div class="dropdown-container">
+        <label for="plantDropdown">Filter by Plant:</label>
+        <select id="plantDropdown">
+          <option value="">All Plants</option>
+          <!-- Options will be populated by JavaScript -->
+        </select>
+      </div>
+    </div>
+
+    <div class="upload-section">
+      <h2>Detect Disease from Image</h2>
+      <p>Upload a photo of your plant to identify potential diseases</p>
+      
+      <div class="upload-container" id="uploadContainer">
+        <div class="upload-box" id="uploadBox">
+          <input type="file" id="imageUpload" accept="image/*" hidden>
+          <i class="fas fa-cloud-upload-alt"></i>
+          <p>Drag & drop an image or click to browse</p>
+        </div>
+        <div class="preview-container" id="previewContainer" style="display: none;">
+          <img id="imagePreview" alt="Preview">
+          <button id="resetUpload"><i class="fas fa-times"></i></button>
+        </div>
+      </div>
+      
+      <button id="analyzeBtn" class="analyze-btn" disabled>Analyze Plant</button>
+      
+      <div class="result-container" id="resultContainer" style="display: none;">
+        <h3>Analysis Results</h3>
+        <div class="result-content" id="resultContent">
+          <!-- Results will appear here -->
+        </div>
+      </div>
+    </div>
+
+    <div class="disease-grid-container">
+      <h2>Plant Disease Library</h2>
+      <div class="disease-grid" id="diseaseGrid">
+        <!-- Disease cards will be populated by JavaScript -->
+      </div>
+    </div>
+  </main>
+
+  <div id="diseaseModal" class="modal">
+    <div class="modal-container">
+      <div class="modal-content" id="modalContent">
+        <!-- Modal content will be populated by JavaScript -->
+      </div>
+      <button class="close-button">&times;</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year"></span> Plant Disease Detector. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

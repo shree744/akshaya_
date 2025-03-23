@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Insect-Plant Interaction Database</title>
+    <meta name="description" content="Database of insects that are harmful or beneficial to plants" />
+    <meta name="author" content="Lovable" />
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <meta property="og:title" content="Insect-Plant Interaction Database" />
+    <meta property="og:description" content="Database of insects that are harmful or beneficial to plants" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  </head>
+
+  <body>
+    <header>
+      <div class="container">
+        <h1>Insect-Plant Interaction Database</h1>
+        <p>Explore the relationships between plants and insects</p>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="upload-section">
+        <h2>Identify Your Plant or Insect</h2>
+        <p>Upload an image to determine if it's a beneficial or harmful species</p>
+        
+        <div class="upload-container">
+          <div class="upload-area" id="uploadArea">
+            <div class="upload-prompt" id="uploadPrompt">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"/><line x1="16" x2="22" y1="5" y2="5"/><line x1="19" x2="19" y1="2" y2="8"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <p>Click to upload or drag and drop</p>
+              <span>Supports JPG, PNG, GIF</span>
+              <input type="file" id="fileInput" accept="image/*" class="file-input">
+            </div>
+            <div class="preview-container" id="previewContainer" style="display: none;">
+              <img id="imagePreview" src="" alt="Preview">
+              <button id="removeButton" class="remove-button">×</button>
+            </div>
+          </div>
+          
+          <div class="upload-controls">
+            <button id="analyzeButton" class="analyze-button" disabled>Analyze Image</button>
+          </div>
+        </div>
+
+        <div id="resultContainer" class="result-container" style="display: none;">
+          <h3>Analysis Result</h3>
+          <div id="resultContent" class="result-content"></div>
+        </div>
+      </div>
+
+      <div class="filters">
+        <div class="filter-group">
+          <label for="plantSelect">Select Plant:</label>
+          <select id="plantSelect">
+            <option value="all">All Plants</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="insectSelect">Select Insect:</label>
+          <select id="insectSelect">
+            <option value="all">All Insects</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="relationshipSelect">Relationship Type:</label>
+          <select id="relationshipSelect">
+            <option value="all">All Relationships</option>
+            <option value="beneficial">Beneficial</option>
+            <option value="harmful">Harmful</option>
+            <option value="neutral">Neutral</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="resultsInfo" class="results-info">
+        <p>Displaying all plant-insect relationships</p>
+      </div>
+
+      <div id="results" class="results-grid">
+        <!-- Results will be loaded here by JavaScript -->
+        <div class="loading">Loading database...</div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2023 Insect-Plant Interaction Database. For educational purposes.</p>
+      </div>
+    </footer>
+    
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

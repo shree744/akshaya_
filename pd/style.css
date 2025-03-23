@@ -1,0 +1,538 @@
+:root {
+    --primary: #4CAF50;
+    --primary-dark: #388E3C;
+    --primary-light: #C8E6C9;
+    --accent: #FF9800;
+    --text-primary: #212121;
+    --text-secondary: #757575;
+    --background: #FAFAFA;
+    --card-bg: #FFFFFF;
+    --border: #DDDDDD;
+    --gray: #9E9E9E;
+    --error: #D32F2F;
+    --success: #388E3C;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background);
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  header {
+    background-color: var(--primary);
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+  }
+  
+  header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+  
+  /* Search and Filter Section */
+  .search-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0;
+    gap: 15px;
+  }
+  
+  .search-container {
+    display: flex;
+    flex: 1;
+    min-width: 280px;
+  }
+  
+  .search-container input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 4px 0 0 4px;
+    font-size: 1rem;
+  }
+  
+  .search-container button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .search-container button:hover {
+    background-color: var(--primary-dark);
+  }
+  
+  .dropdown-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .dropdown-container label {
+    font-weight: 500;
+  }
+  
+  .dropdown-container select {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background-color: white;
+    min-width: 150px;
+  }
+  
+  /* Upload Section */
+  .upload-section {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 40px;
+  }
+  
+  .upload-section h2 {
+    color: var(--text-primary);
+    margin-bottom: 10px;
+  }
+  
+  .upload-section > p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+  
+  .upload-container {
+    margin: 20px 0;
+  }
+  
+  .upload-box {
+    border: 2px dashed var(--primary-light);
+    border-radius: 6px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .upload-box:hover {
+    background-color: var(--primary-light);
+  }
+  
+  .upload-box i {
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+  }
+  
+  .upload-box p {
+    color: var(--text-secondary);
+  }
+  
+  .preview-container {
+    position: relative;
+    margin-top: 20px;
+  }
+  
+  .preview-container img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 6px;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  #resetUpload {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  #resetUpload:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  
+  .analyze-btn {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .analyze-btn:hover:not(:disabled) {
+    background-color: var(--primary-dark);
+  }
+  
+  .analyze-btn:disabled {
+    background-color: var(--gray);
+    cursor: not-allowed;
+  }
+  
+  .result-container {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 6px;
+    background-color: var(--primary-light);
+  }
+  
+  .result-container h3 {
+    margin-bottom: 15px;
+  }
+  
+  /* Disease Grid */
+  .disease-grid-container {
+    margin: 40px 0;
+  }
+  
+  .disease-grid-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .disease-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+  }
+  
+  .disease-card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  
+  .disease-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .disease-image {
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .disease-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  
+  .disease-card:hover .disease-image img {
+    transform: scale(1.05);
+  }
+  
+  .disease-content {
+    padding: 20px;
+  }
+  
+  .disease-tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .disease-tag {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 100px;
+  }
+  
+  .plant-tag {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+  }
+  
+  .severity-tag {
+    background-color: #FFF3E0;
+    color: #E65100;
+  }
+  
+  .disease-title {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+  }
+  
+  .disease-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-clamp: 2;
+  }
+  
+  .disease-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid var(--primary-light);
+  }
+  
+  .view-details {
+    color: var(--primary);
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  
+  .disease-id {
+    font-size: 0.8rem;
+    color: var(--gray);
+  }
+  
+  /* Modal */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  
+  .modal-container {
+    background-color: var(--card-bg);
+    max-width: 800px;
+    margin: 30px auto;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    animation: modalFadeIn 0.3s;
+  }
+  
+  @keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .modal-content {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  .modal-header {
+    position: relative;
+  }
+  
+  .modal-header img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+  
+  .modal-header-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+    color: white;
+  }
+  
+  .modal-tags {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .modal-tag {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 100px;
+  }
+  
+  .modal-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-tabs {
+    display: flex;
+    background-color: var(--primary-light);
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .modal-tab {
+    padding: 15px 20px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: all 0.3s;
+  }
+  
+  .modal-tab.active {
+    background-color: var(--primary);
+    color: white;
+  }
+  
+  .tab-content {
+    padding: 30px;
+  }
+  
+  .tab-panel {
+    animation: fadeIn 0.5s;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .tab-panel h3 {
+    margin-bottom: 20px;
+    color: var(--primary-dark);
+  }
+  
+  .info-list {
+    list-style-position: inside;
+    margin-left: 20px;
+  }
+  
+  .info-list li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 15px;
+  }
+  
+  .info-list li::before {
+    content: "•";
+    color: var(--primary);
+    font-weight: bold;
+    display: inline-block;
+    width: 15px;
+    margin-left: -15px;
+  }
+  
+  .condition-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .condition-card {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .condition-card h4 {
+    color: var(--primary-dark);
+    margin-bottom: 8px;
+    font-size: 1rem;
+  }
+  
+  .condition-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  
+  /* Footer */
+  footer {
+    background-color: var(--primary);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .search-section {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .search-container, .dropdown-container {
+      width: 100%;
+    }
+    
+    .disease-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .modal-container {
+      width: 95%;
+      margin: 20px auto;
+    }
+    
+    .modal-header img {
+      height: 200px;
+    }
+  }
+  

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Smart Agriculture System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>🌾 Advanced Smart Harmful Gas Detection & Extraction System for Agriculture</h1>
+        <nav>
+            <ul>
+                <li><a href="pollution.html">Pollution Data</a></li>
+                <li><a href="plants.html">Plant Recommendations</a></li>
+                <li><a href="insects.html">Insect Identification</a></li>
+                <li><a href="#" onclick="showSection('about')">About</a></li>
+                <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h2>🌱 Welcome to the Future of Agriculture</h2>
+        <div class="image-container">
+            <img src="image.png" alt="Smart Agriculture" class="banner-image">
+        </div>
+        <p>Monitor harmful gases and receive real-time crop advisory to optimize farming practices and ensure healthy crop growth.</p>
+    </section>
+
+    <section id="about" class="hidden">
+        <h2>📚 About This Project</h2>
+        <p>The <strong>Advanced Smart Harmful Gas Detection & Extraction System for Agriculture</strong> is designed to help farmers monitor and mitigate 
+            harmful gases affecting crops. This system integrates IoT-based monitoring and AI-driven recommendations to ensure sustainable agriculture.</p>
+    </section>
+
+    <section id="contact" class="hidden">
+        <h2>📞 Contact Us</h2>
+        <p>Email: aparnagv@gmail.com</p>
+        <p>Phone: +91 9035389734</p>
+    </section>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+    </script>
+
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #f4f4f4; }
+        header { background: linear-gradient(135deg, #6a0572, #9c27b0); color: white; padding: 15px; }
+        nav { background: #4a148c; padding: 10px; }
+        nav ul { list-style: none; padding: 0; }
+        nav ul li { display: inline; margin: 0 15px; }
+        nav ul li a { color: white; text-decoration: none; font-weight: bold; padding: 8px 12px; border-radius: 5px; transition: background 0.3s; }
+        nav ul li a:hover { background: rgba(255, 255, 255, 0.2); }
+        h1 { font-size: 26px; margin-bottom: 10px; }
+        section { padding: 20px; text-align: left; max-width: 800px; margin: 0 auto; }
+        .hidden { display: none; }
+        .image-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .banner-image {
+            width: 100%;
+            display: block;
+            border-radius: 10px;
+        }
+    </style>
+</body>
+</html>

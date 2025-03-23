@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Pollution & Crop Advisory</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>🌍 Pollution & Crop Advisory</h1>
+        <input type="text" id="cityInput" placeholder="Enter city name..." />
+        <button onclick="fetchCityData()">Check Pollution</button>
+    </header>
+
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>City</th>
+                    <th>CO</th>
+                    <th>NO2</th>
+                    <th>SO2</th>
+                    <th>O3</th>
+                    <th>PM2.5</th>
+                    <th>PM10</th>
+                </tr>
+            </thead>
+            <tbody id="pollution-data">
+                <!-- Data updates dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <canvas id="pollutionChart"></canvas>
+
+    <!-- 🌾 Crop Recommendation Section -->
+    <div id="crop-recommendation" class="hidden">
+        <h2>🌾 Crop Recommendation</h2>
+        <div id="crop-content"></div>
+    </div>
+
+    <!-- 🌦️ Weather Data Section -->
+    <div id="weather-data" class="hidden">
+        <h2>🌦️ Current Weather</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Temperature (°C)</th>
+                    <th>Humidity (%)</th>
+                    <th>Pressure (hPa)</th>
+                    <th>Wind Speed (m/s)</th>
+                </tr>
+            </thead>
+            <tbody id="weather-content">
+                <!-- Weather data updates dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const apiKey = "63e7aea3b0f5b28f78bc3c705296d240";
+        const cities = {
+            "Bangalore": { lat: 12.9716, lon: 77.5946 },
+            "Chennai": { lat: 13.0827, lon: 80.2707 },
+            "Delhi": { lat: 28.7041, lon: 77.1025 },
+            "Mumbai": { lat: 19.0760, lon: 72.8777 },
+            "Kolkata": { lat: 22.5726, lon: 88.3639 },
+            "Hyderabad": { lat: 17.3850, lon: 78.4867 },
+            "Pune": { lat: 18.5204, lon: 73.8567 },
+            "Ahmedabad": { lat: 23.0225, lon: 72.5714 },
+            "Jaipur": { lat: 26.9124, lon: 75.7873 },
+            "Lucknow": { lat: 26.8467, lon: 80.9462 }
+        };
+
+        let chart;
+
+        function fetchCityData() {
+    let cityName = document.getElementById("cityInput").value.trim();
+    if (!cities[cityName]) {
+        alert("City not found! Please enter a valid city name.");
+        return;
+    }
+
+    let { lat, lon } = cities[cityName];
+    let pollutionUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+    let weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+
+    // Fetch pollution data
+    fetch(pollutionUrl)
+        .then(response => response.json())
+        .then(pollutionData => {
+            let pollution = pollutionData.list[0].components;
+
+            // Display pollution data in table
+            let tableBody = document.getElementById("pollution-data");
+            tableBody.innerHTML = `
+                <tr>
+                    <td>${cityName}</td>
+                    <td>${pollution.co.toFixed(2)}</td>
+                    <td>${pollution.no2.toFixed(2)}</td>
+                    <td>${pollution.so2.toFixed(2)}</td>
+                    <td>${pollution.o3.toFixed(2)}</td>
+                    <td>${pollution.pm2_5.toFixed(2)}</td>
+                    <td>${pollution.pm10.toFixed(2)}</td>
+                </tr>
+            `;
+
+            // Store pollution data in localStorage
+            localStorage.setItem("pollutionData", JSON.stringify({
+                city: cityName,
+                co: pollution.co,
+                no2: pollution.no2,
+                so2: pollution.so2,
+                o3: pollution.o3,
+                pm2_5: pollution.pm2_5,
+                pm10: pollution.pm10,
+                timestamp: new Date().toISOString()
+            }));
+
+            updateChart(cityName, pollution);
+            suggestCrops(cityName, pollution);
+        })
+        .catch(error => console.error("Error fetching pollution data:", error));
+
+    // Fetch weather data
+    fetch(weatherUrl)
+        .then(response => response.json())
+        .then(weatherData => {
+            let temp = weatherData.main.temp;
+            let humidity = weatherData.main.humidity;
+            let pressure = weatherData.main.pressure;
+            let windSpeed = weatherData.wind.speed;
+
+            // Display weather data in table
+            let weatherTable = document.getElementById("weather-content");
+            weatherTable.innerHTML = `
+                <tr>
+                    <td>${temp.toFixed(1)}</td>
+                    <td>${humidity}</td>
+                    <td>${pressure}</td>
+                    <td>${windSpeed}</td>
+                </tr>
+            `;
+
+            document.getElementById("weather-data").style.display = "block";  
+
+            // Store weather data in localStorage
+            localStorage.setItem("weatherData", JSON.stringify({
+                city: cityName,
+                temperature: temp,
+                humidity: humidity,
+                pressure: pressure,
+                windSpeed: windSpeed,
+                timestamp: new Date().toISOString()
+            }));
+        })
+        .catch(error => console.error("Error fetching weather data:", error));
+}
+
+        
+
+        function updateChart(city, pollution) {
+            let ctx = document.getElementById("pollutionChart").getContext("2d");
+            if (chart) chart.destroy();
+            chart = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: ["CO", "NO2", "SO2", "O3", "PM2.5", "PM10"],
+                    datasets: [{
+                        label: `Pollution Levels in ${city}`,
+                        data: [pollution.co, pollution.no2, pollution.so2, pollution.o3, pollution.pm2_5, pollution.pm10],
+                        backgroundColor: ["red", "orange", "yellow", "green", "blue", "purple"],
+                    }]
+                }
+            });
+        }
+
+        function suggestCrops(city, pollution) {
+            let recommendation = "";
+            if (pollution.pm2_5 < 30 && pollution.no2 < 40) {
+                recommendation = "🌱 Ideal for growing <strong>Rice, Wheat, and Maize</strong>. Pollution levels are safe.";
+            } else if (pollution.co > 10 || pollution.pm10 > 50) {
+                recommendation = "⚠️ High pollution detected! Consider pollution-resistant crops like <strong>Sorghum and Millet</strong>.";
+            } else {
+                recommendation = "🌿 Moderate pollution levels. Best suited for <strong>Barley, Soybeans, and Pulses</strong>.";
+            }
+
+            document.getElementById("crop-content").innerHTML = `<p>${recommendation}</p>`;
+            document.getElementById("crop-recommendation").style.display = "block";
+        }
+
+        function displayStoredData() {
+    let pollutionData = JSON.parse(localStorage.getItem("pollutionData"));
+    let weatherData = JSON.parse(localStorage.getItem("weatherData"));
+
+    if (pollutionData) {
+        console.log("Stored Pollution Data:", pollutionData);
+    } else {
+        console.log("No stored pollution data found.");
+    }
+
+    if (weatherData) {
+        console.log("Stored Weather Data:", weatherData);
+    } else {
+        console.log("No stored weather data found.");
+    }
+}
+
+// Call this function when the page loads
+window.onload = displayStoredData;
+
+
+    </script>
+
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #f4f4f4; }
+        h1 { color: #333; }
+        .container { margin-top: 20px; }
+        table { width: 80%; margin: auto; border-collapse: collapse; background: white; }
+        th, td { padding: 10px; border: 1px solid #ddd; }
+        th { background: #333; color: white; }
+        button { padding: 10px; background: #007BFF; color: white; border: none; cursor: pointer; }
+        input { padding: 10px; width: 200px; }
+        canvas { margin-top: 20px; width: 60%; }
+        .hidden { display: none; }
+    </style>
+
+</body>
+</html>

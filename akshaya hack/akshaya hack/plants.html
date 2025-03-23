@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>🌿 Recommended Plants Based on Pollution Levels</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Pollutant</th>
+                <th>Level</th>
+                <th>Recommended Plants</th>
+            </tr>
+        </thead>
+        <tbody id="plant-recommendations">
+        </tbody>
+    </table>
+
+    <script>
+        function getRecommendedPlants(pollutionData) {
+            let recommendations = [];
+            
+            if (pollutionData.co > 5) {
+                recommendations.push({ pollutant: 'CO', level: pollutionData.co, plants: 'Areca Palm, Money Plant' });
+            }
+            if (pollutionData.no2 > 40) {
+                recommendations.push({ pollutant: 'NO2', level: pollutionData.no2, plants: 'Snake Plant, Aloe Vera' });
+            }
+            if (pollutionData.so2 > 20) {
+                recommendations.push({ pollutant: 'SO2', level: pollutionData.so2, plants: 'Spider Plant, Peace Lily' });
+            }
+            if (pollutionData.o3 > 50) {
+                recommendations.push({ pollutant: 'O3', level: pollutionData.o3, plants: 'Bamboo Palm, Golden Pothos' });
+            }
+            if (pollutionData.pm2_5 > 35) {
+                recommendations.push({ pollutant: 'PM2.5', level: pollutionData.pm2_5, plants: 'Boston Fern, Rubber Plant' });
+            }
+            if (pollutionData.pm10 > 50) {
+                recommendations.push({ pollutant: 'PM10', level: pollutionData.pm10, plants: 'Chrysanthemum, English Ivy' });
+            }
+
+            return recommendations;
+        }
+
+        function displayRecommendations() {
+            let pollutionData = localStorage.getItem("pollutionData");
+            if (!pollutionData) {
+                document.getElementById("plant-recommendations").innerHTML = "<tr><td colspan='3'>No data available. Please fetch pollution data first.</td></tr>";
+                return;
+            }
+
+            pollutionData = JSON.parse(pollutionData);
+            let recommendations = getRecommendedPlants(pollutionData);
+            let tableBody = document.getElementById("plant-recommendations");
+            tableBody.innerHTML = "";
+            
+            recommendations.forEach(item => {
+                let row = `<tr>
+                    <td>${item.pollutant}</td>
+                    <td>${item.level.toFixed(2)}</td>
+                    <td>${item.plants}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        window.onload = displayRecommendations;
+    </script>
+</body>
+</html>
